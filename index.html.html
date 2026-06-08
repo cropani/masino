@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Casa Masino - Affittacamere | Foto finalmente visibili su mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --outer-deep: #1f6392;
+            --inner-sky: #4aa3df;
+            --card-white: #ffffff;
+            --shadow-3d: 0 20px 30px -12px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(255,255,255,0.1) inset;
+            --shadow-card: 0 12px 24px -12px rgba(0, 0, 0, 0.25);
+            --radius-main: 1.2rem;
+            --radius-elements: 0.85rem;
+            --radius-buttons: 0.7rem;
+        }
+
+        body {
+            background: var(--outer-deep);
+            font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .site-rectangle {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--inner-sky), #3e95cf);
+            border-radius: var(--radius-main);
+            box-shadow: 0 30px 40px -18px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(2px);
+            border-top-left-radius: var(--radius-main);
+            border-top-right-radius: var(--radius-main);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 2px solid rgba(74, 163, 223, 0.6);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.6rem 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f6e93, #2c8eb8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.4rem 0;
+            color: #1b6b8f;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-btn.active {
+            color: #0b5b7c;
+            border-bottom-color: #0b5b7c;
+        }
+
+        .admin-panel {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #e3f0f8;
+            padding: 0.2rem 0.8rem;
+            border-radius: var(--radius-buttons);
+        }
+        .admin-status {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        button {
+            background: #eef4f9;
+            border: none;
+            padding: 0.3rem 0.9rem;
+            border-radius: var(--radius-buttons);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        button.primary {
+            background: linear-gradient(105deg, #2c7fb8, #1f6e93);
+            color: white;
+        }
+        button.primary:hover {
+            background: linear-gradient(105deg, #236e96, #185e81);
+            transform: translateY(-1px);
+        }
+        button.danger {
+            background: #cf7f7f;
+            color: white;
+        }
+        .warning-btn {
+            background: #f0ad4e;
+            color: #fff;
+            margin-left: 0.5rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.2rem 1.8rem 1.8rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .hero {
+            background: linear-gradient(115deg, #ffffff, #f8fcff);
+            border-radius: var(--radius-elements);
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-3d);
+        }
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #0d5a7c;
+        }
+        .hero p {
+            font-size: 1rem;
+            color: #2c6d8c;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .card {
+            background: var(--card-white);
+            border-radius: var(--radius-elements);
+            padding: 1.2rem;
+            border: 1px solid #cae2f0;
+            box-shadow: var(--shadow-card);
+        }
+        .card h3 { font-size: 1.2rem; margin-bottom: 0.4rem; color: #1f6e93; }
+        .card p { font-size: 0.9rem; color: #2f6c88; }
+
+        .slider-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0.5rem auto 0.2rem auto;
+            background: #ffffff;
+            border-radius: var(--radius-elements);
+            overflow: hidden;
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.25);
+        }
+        .slider-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .slider-caption {
+            text-align: center;
+            padding: 0.4rem 0.5rem;
+            background: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0d5a7c;
+            border-top: 1px solid #e0eff7;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(27, 107, 143, 0.8);
+            backdrop-filter: blur(2px);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0.1rem 0.6rem;
+            cursor: pointer;
+            border-radius: 2rem;
+        }
+        .slider-btn:hover { background: #0b5b7c; }
+        .prev { left: 8px; }
+        .next { right: 8px; }
+        .dots {
+            text-align: center;
+            padding: 0.3rem 0 0.4rem;
+            background: #ffffff;
+        }
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin: 0 4px;
+            background: #b3d2e8;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dot.active {
+            background: #1f6e93;
+            transform: scale(1.2);
+        }
+        .upload-area {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: var(--radius-elements);
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px dashed #2c8eb8;
+        }
+        .admin-delete-slider {
+            text-align: center;
+            margin: 0.3rem 0 0.2rem;
+        }
+
+        .calendar-header-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            background: rgba(238, 245, 250, 0.8);
+            padding: 0.4rem 1rem;
+            border-radius: 1rem;
+        }
+        .calendar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #115f81;
+        }
+        .legend-inline {
+            display: flex;
+            gap: 1rem;
+        }
+        .legend-inline span {
+            font-size: 0.75rem;
+            background: white;
+            padding: 0.2rem 0.9rem;
+            border-radius: 2rem;
+            color: #115f81;
+            font-weight: 600;
+        }
+        .calendar-header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .month-year {
+            font-size: 1rem;
+            font-weight: 700;
+            background: #eef5fa;
+            padding: 0.2rem 0.8rem;
+            border-radius: 0.7rem;
+        }
+        .calendar-grid {
+            background: white;
+            border-radius: var(--radius-elements);
+            overflow: auto;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background: #cae3f1;
+            text-align: center;
+            padding: 0.5rem 0;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .calendar-day {
+            min-height: 85px;
+            border: 1px solid #e0eff7;
+            padding: 0.4rem;
+            background: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .calendar-day .day-number {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            background: #e2f0f8;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+        .calendar-day.occupied .day-number { background: #cf8a7a; color: white; }
+        .admin-hint {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 0.7rem;
+            border-top: 2px solid #aacce2;
+            background: #cde6f2;
+            color: #115f81;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border-bottom-left-radius: var(--radius-main);
+            border-bottom-right-radius: var(--radius-main);
+        }
+        footer::before {
+            content: "~~";
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 3px;
+            opacity: 0.6;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            align-items: flex-end;
+        }
+        input, input[type="text"], input[type="file"] {
+            padding: 0.3rem;
+            font-size: 0.8rem;
+            border-radius: 0.5rem;
+            border: 1px solid #bbd3e6;
+        }
+
+        @media (max-width: 720px) {
+            .slider-image { height: 260px; }
+            .calendar-day { min-height: 70px; }
+            .container { padding: 1rem; }
+            .nav-container { padding: 0.5rem 1rem; }
+            .calendar-header-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+                background: none;
+                padding: 0;
+            }
+            .calendar-title {
+                background: #eef5fa;
+                padding: 0.2rem 0.8rem;
+                border-radius: 0.7rem;
+                text-align: center;
+            }
+            .legend-inline {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="site-rectangle">
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo"><h2>🌊 "Casa Masino"</h2></div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="home">🏠 Home</button>
+                <button class="nav-btn" data-page="gallery">🖼️ Galleria</button>
+                <button class="nav-btn" data-page="calendar">📅 Calendario</button>
+            </div>
+            <div class="admin-panel" id="adminPanel">
+                <div class="admin-status" id="adminStatus">👤 Modalità: <span>Visitatore</span></div>
+                <button id="adminLoginBtn" class="primary">🔐 Admin</button>
+                <button id="adminLogoutBtn" style="display: none;">🚪 Logout</button>
+                <button id="resetStorageBtn" class="warning-btn" style="display: none;">🗑️ Reset foto</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="homePage" class="page active-page">
+            <div class="hero">
+                <h1>Benvenuti a Casa Masino</h1>
+                <p>Ospitalità autentica tra il blu del mare e le viuzze del borgo</p>
+            </div>
+            <div class="features">
+                <div class="card"><h3>🛌 Camere accoglienti</h3><p>Arredi confortevoli, vista mare.</p></div>
+                <div class="card"><h3>🍳 Colazione genuina</h3><p>Prodotti locali, terrazza luminosa.</p></div>
+                <div class="card"><h3>📍 Posizione ideale</h3><p>Centro storico a pochi passi dal mare.</p></div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: center; background: #ffffffcc; width: fit-content; margin: 1rem auto 0; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.8rem;">⭐ "Un soggiorno da ricordare" ⭐</div>
+        </div>
+
+        <div id="galleryPage" class="page">
+            <h2 style="font-size: 1.3rem; margin-bottom: 0.2rem; color: #115f81;">📸 Le nostre camere e spazi</h2>
+            <p style="margin-bottom: 0.5rem; font-size: 0.85rem;">Scorri le immagini</p>
+            <div id="adminUploadSection" style="display: none;" class="upload-area">
+                <h3 style="font-size: 1rem;">➕ Inserisci nuova immagine</h3>
+                <div class="flex-row">
+                    <input type="file" id="imageUploadInput" accept="image/jpeg,image/png,image/webp">
+                    <input type="text" id="imageCaption" placeholder="Didascalia" style="flex:1;">
+                    <button id="uploadImageBtn" class="primary">Carica</button>
+                </div>
+                <p style="font-size: 0.7rem; margin-top: 0.5rem; color: #666;">✅ Le foto vengono automaticamente compresse (max 800px) per essere visibili su tutti i dispositivi.</p>
+            </div>
+            <div id="sliderWrapper" style="display: none;">
+                <div class="slider-container">
+                    <button class="slider-btn prev" id="prevSlide">❮</button>
+                    <img id="sliderImage" class="slider-image" src="" alt="slide">
+                    <button class="slider-btn next" id="nextSlide">❯</button>
+                    <div id="sliderCaption" class="slider-caption"></div>
+                    <div class="dots" id="dotsContainer"></div>
+                </div>
+                <div id="adminDeleteSlider" class="admin-delete-slider" style="display: none;">
+                    <button id="deleteCurrentImageBtn" class="danger">🗑️ Elimina questa immagine</button>
+                </div>
+            </div>
+            <div id="noImagesMessage" style="text-align:center; padding:1.5rem; display: none;">Nessuna immagine.</div>
+        </div>
+
+        <div id="calendarPage" class="page">
+            <div class="calendar-header-group">
+                <div class="calendar-title">📆 Calendario disponibilità</div>
+                <div class="legend-inline">
+                    <span>🟢 Libero</span>
+                    <span>🔴 Occupato</span>
+                </div>
+            </div>
+            <div id="calendarContainer"></div>
+            <div id="adminCalendarHint" class="admin-hint" style="display: none;">✨ Admin: clicca su un giorno per cambiare stato.</div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Casa Masino | Via del Mare, 12 | Tel. +39 333 1234567</p>
+    </footer>
+</div>
+
+<script>
+    const STORAGE_IMAGES = "affittacamere_images";
+    const STORAGE_OCCUPIED = "affittacamere_occupied";
+    const ADMIN_PASSWORD = "123";
+    let isAdmin = false;
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let images = [];
+    let occupiedDates = [];
+    let currentSlideIndex = 0;
+
+    // Compressione forte per mobile (800px, qualità 0.6)
+    function compressImage(file, maxWidth = 800, quality = 0.6) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                    resolve(compressedDataUrl);
+                };
+                img.onerror = reject;
+            };
+            reader.onerror = reject;
+        });
+    }
+
+    function loadImages() {
+        const stored = localStorage.getItem(STORAGE_IMAGES);
+        if(stored) {
+            try {
+                images = JSON.parse(stored);
+                // Verifica che le immagini siano valide
+                if (!Array.isArray(images)) images = [];
+            } catch(e) { images = []; }
+        }
+        // Se non ci sono immagini o sono vuote, carica demo
+        if(!images || images.length === 0) {
+            images = [
+                { id: Date.now()+1, url: "https://picsum.photos/id/15/800/500", caption: "Vista sul mare" },
+                { id: Date.now()+2, url: "https://picsum.photos/id/29/800/500", caption: "Terrazza al tramonto" },
+                { id: Date.now()+3, url: "https://picsum.photos/id/164/800/500", caption: "Camera matrimoniale" }
+            ];
+            saveImages();
+        }
+    }
+    
+    function saveImages() { 
+        try {
+            localStorage.setItem(STORAGE_IMAGES, JSON.stringify(images));
+        } catch(e) {
+            if (e.name === 'QuotaExceededError') {
+                alert("Lo spazio di archiviazione è pieno. Prova a eliminare qualche foto o a usarne di più piccole.");
+                // Opzione: rimuovere l'ultima immagine aggiunta
+                if(images.length > 0) {
+                    images.pop();
+                    saveImages();
+                }
+            } else {
+                console.error("Errore salvataggio", e);
+            }
+        }
+    }
+    
+    function loadOccupiedDates() {
+        const stored = localStorage.getItem(STORAGE_OCCUPIED);
+        if(stored) occupiedDates = JSON.parse(stored);
+        else {
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = String(today.getMonth()+1).padStart(2,'0');
+            let demo = [];
+            for(let i=3; i<=8; i++) demo.push(`${y}-${m}-${String(i).padStart(2,'0')}`);
+            let nextMonth = today.getMonth()+2;
+            let yearNext = y;
+            if(nextMonth > 12) { nextMonth = 1; yearNext++; }
+            demo.push(`${yearNext}-${String(nextMonth).padStart(2,'0')}-05`);
+            demo.push(`${yearNext}-${String(nextMonth).padStart(2,'0')}-10`);
+            occupiedDates = [...new Set(demo)];
+            saveOccupiedDates();
+        }
+    }
+    function saveOccupiedDates() { localStorage.setItem(STORAGE_OCCUPIED, JSON.stringify(occupiedDates)); }
+    function toggleOccupied(dateStr) {
+        const idx = occupiedDates.indexOf(dateStr);
+        if(idx === -1) occupiedDates.push(dateStr);
+        else occupiedDates.splice(idx,1);
+        saveOccupiedDates();
+        renderCalendar();
+    }
+
+    function renderSlider() {
+        const wrapper = document.getElementById("sliderWrapper");
+        const noMsg = document.getElementById("noImagesMessage");
+        if(!images.length) {
+            if(wrapper) wrapper.style.display = "none";
+            if(noMsg) noMsg.style.display = "block";
+            return;
+        }
+        if(wrapper) wrapper.style.display = "block";
+        if(noMsg) noMsg.style.display = "none";
+        if(currentSlideIndex >= images.length) currentSlideIndex = images.length - 1;
+        if(currentSlideIndex < 0) currentSlideIndex = 0;
+        const img = images[currentSlideIndex];
+        const sliderImg = document.getElementById("sliderImage");
+        if(sliderImg) sliderImg.src = img.url;
+        const captionDiv = document.getElementById("sliderCaption");
+        if(captionDiv) captionDiv.innerText = img.caption;
+        const dotsContainer = document.getElementById("dotsContainer");
+        if(dotsContainer) {
+            dotsContainer.innerHTML = "";
+            images.forEach((_, idx) => {
+                const dot = document.createElement("span");
+                dot.classList.add("dot");
+                if(idx === currentSlideIndex) dot.classList.add("active");
+                dot.addEventListener("click", () => { currentSlideIndex = idx; renderSlider(); });
+                dotsContainer.appendChild(dot);
+            });
+        }
+        const delDiv = document.getElementById("adminDeleteSlider");
+        if(delDiv) delDiv.style.display = isAdmin ? "block" : "none";
+    }
+    function nextSlide() { if(images.length) { currentSlideIndex = (currentSlideIndex + 1) % images.length; renderSlider(); } }
+    function prevSlide() { if(images.length) { currentSlideIndex = (currentSlideIndex - 1 + images.length) % images.length; renderSlider(); } }
+    
+    async function addImageFromFile(file, caption) {
+        if (!file) return;
+        // Compressione spinta
+        let compressedUrl;
+        try {
+            compressedUrl = await compressImage(file, 800, 0.6);
+        } catch(err) {
+            alert("Errore nella compressione dell'immagine. Riprova con un'immagine più piccola.");
+            return;
+        }
+        // Verifica dimensione approssimativa della stringa Base64
+        if (compressedUrl.length > 4.5 * 1024 * 1024) { // oltre 4.5 MB
+            if(!confirm("L'immagine compressa è ancora molto grande (oltre 4MB). Potrebbe non essere salvata. Continuare lo stesso?"))
+                return;
+        }
+        images.push({ id: Date.now(), url: compressedUrl, caption: caption.trim() || "Immagine" });
+        saveImages();
+        if(images.length === 1) currentSlideIndex = 0;
+        renderSlider();
+        alert("Immagine aggiunta e compressa con successo! Ora visibile anche su mobile.");
+    }
+
+    function deleteImageById(id) {
+        images = images.filter(img => img.id != id);
+        saveImages();
+        if(images.length === 0) currentSlideIndex = 0;
+        else if(currentSlideIndex >= images.length) currentSlideIndex = images.length - 1;
+        renderSlider();
+    }
+    function deleteCurrentImage() {
+        if(!isAdmin || !images.length) return;
+        if(confirm("Eliminare questa immagine?")) deleteImageById(images[currentSlideIndex].id);
+    }
+    
+    function resetStorage() {
+        if(confirm("⚠️ ATTENZIONE: cancellerai TUTTE le foto caricate da te e tornerai alle immagini di esempio. Sei sicuro?")) {
+            images = [
+                { id: Date.now()+1, url: "https://picsum.photos/id/15/800/500", caption: "Vista sul mare" },
+                { id: Date.now()+2, url: "https://picsum.photos/id/29/800/500", caption: "Terrazza al tramonto" },
+                { id: Date.now()+3, url: "https://picsum.photos/id/164/800/500", caption: "Camera matrimoniale" }
+            ];
+            saveImages();
+            currentSlideIndex = 0;
+            renderSlider();
+            alert("Storage reset: immagini di esempio ripristinate.");
+        }
+    }
+
+    function renderCalendar() {
+        const container = document.getElementById("calendarContainer");
+        if(!container) return;
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const startWeekday = firstDay.getDay();
+        const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+        const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+        let html = `<div class="calendar-header-nav"><button id="prevMonthBtn" class="primary">◀</button><div class="month-year">${getMonthName(currentMonth)} ${currentYear}</div><button id="nextMonthBtn" class="primary">▶</button></div><div class="calendar-grid"><div class="weekdays"><div>Dom</div><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div></div><div class="calendar-days">`;
+        let dayCounter = 1, nextCounter = 1;
+        for(let i=0; i<42; i++) {
+            let cellYear = currentYear, cellMonth = currentMonth;
+            let isCurrent = false, dayNum = 0;
+            if(i < startWeekday) {
+                dayNum = prevMonthDays - startWeekday + i + 1;
+                let pm = currentMonth-1, py = currentYear;
+                if(pm<0) { pm=11; py--; }
+                cellYear=py; cellMonth=pm;
+            } else if(dayCounter <= daysInMonth) {
+                dayNum = dayCounter++;
+                isCurrent = true;
+            } else {
+                dayNum = nextCounter++;
+                let nm = currentMonth+1, ny = currentYear;
+                if(nm>11) { nm=0; ny++; }
+                cellYear=ny; cellMonth=nm;
+            }
+            const dateStr = `${cellYear}-${String(cellMonth+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+            const occ = occupiedDates.includes(dateStr);
+            let cls = "calendar-day";
+            if(!isCurrent) cls += " other-month";
+            if(occ) cls += " occupied";
+            html += `<div class="${cls}" data-date="${dateStr}" data-iseditable="${isCurrent}"><div class="day-number">${dayNum}</div>${occ ? '❌' : '✅'}</div>`;
+        }
+        html += `</div></div>`;
+        container.innerHTML = html;
+        document.querySelectorAll('.calendar-day').forEach(div => {
+            const date = div.dataset.date;
+            const editable = div.dataset.iseditable === 'true';
+            div.addEventListener('click', () => {
+                if(isAdmin && editable) toggleOccupied(date);
+                else if(isAdmin && !editable) alert("Modifica solo giorni del mese corrente");
+                else alert("Solo admin può modificare");
+            });
+        });
+        const prevBtn = document.getElementById("prevMonthBtn");
+        const nextBtn = document.getElementById("nextMonthBtn");
+        if(prevBtn) prevBtn.addEventListener("click", () => changeMonth(-1));
+        if(nextBtn) nextBtn.addEventListener("click", () => changeMonth(1));
+    }
+    function changeMonth(delta) {
+        let nm = currentMonth+delta, ny = currentYear;
+        if(nm<0) { nm=11; ny--; }
+        if(nm>11) { nm=0; ny++; }
+        currentMonth=nm; currentYear=ny;
+        renderCalendar();
+    }
+    function getMonthName(m) { return ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"][m]; }
+
+    function updateAdminUI() {
+        const adminSpan = document.querySelector("#adminStatus span");
+        const loginBtn = document.getElementById("adminLoginBtn");
+        const logoutBtn = document.getElementById("adminLogoutBtn");
+        const resetBtn = document.getElementById("resetStorageBtn");
+        const uploadSec = document.getElementById("adminUploadSection");
+        const adminHint = document.getElementById("adminCalendarHint");
+        if(isAdmin) {
+            if(adminSpan) adminSpan.innerText = "Amministratore";
+            if(loginBtn) loginBtn.style.display = "none";
+            if(logoutBtn) logoutBtn.style.display = "inline-block";
+            if(resetBtn) resetBtn.style.display = "inline-block";
+            if(uploadSec) uploadSec.style.display = "block";
+            if(adminHint) adminHint.style.display = "block";
+        } else {
+            if(adminSpan) adminSpan.innerText = "Visitatore";
+            if(loginBtn) loginBtn.style.display = "inline-block";
+            if(logoutBtn) logoutBtn.style.display = "none";
+            if(resetBtn) resetBtn.style.display = "none";
+            if(uploadSec) uploadSec.style.display = "none";
+            if(adminHint) adminHint.style.display = "none";
+        }
+        renderSlider();
+        if(document.getElementById("calendarPage").classList.contains("active-page")) renderCalendar();
+    }
+    function adminLogin() { const pwd = prompt("Password admin:"); if(pwd === ADMIN_PASSWORD) { isAdmin = true; updateAdminUI(); } else alert("Password errata"); }
+    function adminLogout() { isAdmin = false; updateAdminUI(); }
+
+    function setupUpload() {
+        const uploadBtn = document.getElementById("uploadImageBtn");
+        const fileInput = document.getElementById("imageUploadInput");
+        const captionInput = document.getElementById("imageCaption");
+        if(uploadBtn) uploadBtn.addEventListener("click", async () => {
+            if(!isAdmin) return alert("Solo admin");
+            const file = fileInput.files[0];
+            if(!file) return alert("Seleziona un'immagine");
+            await addImageFromFile(file, captionInput.value);
+            fileInput.value = "";
+            captionInput.value = "";
+        });
+    }
+
+    function initNavigation() {
+        const pages = { home: "homePage", gallery: "galleryPage", calendar: "calendarPage" };
+        const btns = document.querySelectorAll(".nav-btn");
+        function show(pageId) {
+            Object.values(pages).forEach(p => document.getElementById(p).classList.remove("active-page"));
+            document.getElementById(pages[pageId]).classList.add("active-page");
+            btns.forEach(b => b.classList.toggle("active", b.dataset.page === pageId));
+            if(pageId === "gallery") renderSlider();
+            if(pageId === "calendar") renderCalendar();
+        }
+        btns.forEach(b => b.addEventListener("click", () => show(b.dataset.page)));
+        show("home");
+    }
+
+    function init() {
+        loadImages();
+        loadOccupiedDates();
+        initNavigation();
+        updateAdminUI();
+        setupUpload();
+        const loginBtn = document.getElementById("adminLoginBtn");
+        const logoutBtn = document.getElementById("adminLogoutBtn");
+        const resetBtn = document.getElementById("resetStorageBtn");
+        const prevBtn = document.getElementById("prevSlide");
+        const nextBtn = document.getElementById("nextSlide");
+        const delBtn = document.getElementById("deleteCurrentImageBtn");
+        if(loginBtn) loginBtn.addEventListener("click", adminLogin);
+        if(logoutBtn) logoutBtn.addEventListener("click", adminLogout);
+        if(resetBtn) resetBtn.addEventListener("click", resetStorage);
+        if(prevBtn) prevBtn.addEventListener("click", prevSlide);
+        if(nextBtn) nextBtn.addEventListener("click", nextSlide);
+        if(delBtn) delBtn.addEventListener("click", deleteCurrentImage);
+        renderCalendar();
+        renderSlider();
+    }
+    init();
+</script>
+</body>
+</html>
