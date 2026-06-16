@@ -571,11 +571,12 @@
     // Galleria immagini - CORRETTA (mancava una virgola)
     const GALLERY_IMAGES = [
         { url: "images/casamasino.jpeg", caption: "Vista esterna" },
-        { url: "images/cucina2.jpeg", caption: "Cucina" },
-        { url: "images/notte.jpeg", caption: "Zona notte" },
-        { url: "images/notte3.jpeg", caption: "Zona notte" },  
-        { url: "images/bagno2.jpeg", caption: "Bagno" },
-        { url: "images/bagno.jpeg", caption: "Bagno" }
+         { url: "images/cucina1.jpeg", caption: "Cucina pian terreno" },
+        { url: "images/cucina2.jpeg", caption: "Cucina primo piano" },
+        { url: "images/notte.jpeg", caption: "Zona notte primo piano" },
+        { url: "images/notte3.jpeg", caption: "Zona notte pian terreno" },  
+        { url: "images/bagno2.jpeg", caption: "Bagno primo piano" },
+        { url: "images/bagno.jpeg", caption: "Bagno pian terreno" }
     ];
     let images = GALLERY_IMAGES.map((img, idx) => ({ id: idx, url: img.url, caption: img.caption }));
     let currentSlideIndex = 0;
