@@ -269,6 +269,28 @@
             min-height: auto;
         }
         
+        /* PULSANTE WHATSAPP - ridimensionato e centrato */
+        .whatsapp-btn {
+            display: block;
+            margin: 0.5rem auto 0;
+            background: #25D366;
+            color: white !important;
+            border: none;
+            padding: 0.225rem 1.1rem;    /* stesso padding dei nav-btn */
+            font-size: 0.75rem;          /* stessa dimensione dei nav-btn */
+            font-weight: 600;
+            border-radius: 0.25rem;      /* stesso arrotondamento dei nav-btn */
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .whatsapp-btn:hover {
+            background: #1ebe5c;
+            transform: scale(1.02);
+        }
+        .whatsapp-btn:active {
+            transform: scale(0.97);
+        }
+        
         /* FOOTER */
         footer {
             display: flex;
@@ -522,6 +544,11 @@
                 <div id="calendarContainer"></div>
                 <div id="adminCalendarHint" style="display:none; text-align:center; margin-top:0.6rem">✨ Admin: clicca sul giorno per cambiare stato (libero/occupato)</div>
             </div>
+            <!-- NUOVA CARD WHATSAPP -->
+            <div class="full-width-card" id="whatsappCard">
+                <p> Per informazioni sulle prenotazioni contattaci direttamente su WhatsApp!</p>
+                <button id="whatsappBtn" class="whatsapp-btn">Clicca per l'invio</button>
+            </div>
         </div>
     </main>
     <footer>
@@ -568,14 +595,14 @@
     const database = firebase.database();
     const occupiedRef = database.ref('occupiedDates');
 
-    // Galleria immagini - CORRETTA (mancava una virgola)
+    // Galleria immagini
     const GALLERY_IMAGES = [
         { url: "images/casamasino.jpeg", caption: "Vista esterna" },
-         { url: "images/Cucina1.jpg", caption: "Cucina pian terreno" },
+        { url: "images/Cucina1.jpg", caption: "Cucina pian terreno" },
         { url: "images/cucina2.jpeg", caption: "Cucina primo piano" },
         { url: "images/cucina1.jpeg", caption: "Cucina primo piano" },
         { url: "images/notte.jpeg", caption: "Zona notte primo piano" },
-        { url: "images/notte3.jpeg", caption: "Zona notte pian terreno " },  
+        { url: "images/notte3.jpeg", caption: "Zona notte pian terreno" },
         { url: "images/bagno2.jpeg", caption: "Bagno pian terreno" },
         { url: "images/bagno.jpeg", caption: "Bagno primo piano" }
     ];
@@ -585,6 +612,9 @@
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
     let occupiedDates = [];
+
+    // Numero di telefono per WhatsApp (nascosto in JS)
+    const adminPhone = '393389579038'; 
 
     // Calendario
     function listenToOccupied() {
@@ -789,6 +819,16 @@
         document.getElementById("prevSlide").addEventListener("click", prevSlide);
         document.getElementById("nextSlide").addEventListener("click", nextSlide);
         renderSlider();
+        
+        // Pulsante WhatsApp
+        const waBtn = document.getElementById("whatsappBtn");
+        if (waBtn) {
+            waBtn.addEventListener('click', () => {
+                const msg = 'Ciao, vorrei informazioni su Casa Masino';
+                const url = `https://wa.me/${adminPhone}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            });
+        }
         
         const logoImg = document.querySelector('.logo img');
         if (logoImg) {
